@@ -3,6 +3,7 @@ package main
 import (
 	"cloud-computing/organization/organization/src/config"
 	"cloud-computing/organization/organization/src/database"
+	"cloud-computing/organization/organization/src/restful/route"
 	"github.com/gin-gonic/gin"
 	"log"
 	"os"
@@ -28,6 +29,7 @@ func main() {
 	r.GET("/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{"status": "OK"})
 	})
+	route.SetupOrganizationRoute(r)
 
 	// Start server
 	port := os.Getenv("PORT")
