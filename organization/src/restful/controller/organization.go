@@ -2,6 +2,9 @@ package controller
 
 import (
 	"cloud-computing/organization/organization/src/restful/models/dto"
+	"cloud-computing/organization/organization/src/restful/service"
+	"cloud-computing/organization/organization/src/restful/validation"
+	"context"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -9,58 +12,64 @@ import (
 
 // CreateOrganization handles organization creation
 func CreateOrganization(c *gin.Context) {
+	ctx, cancel := context.WithTimeout(c.Request.Context(), ApiContextTimeout)
+	defer cancel()
+
 	var req dto.CreateOrganizationReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, ParseError(err))
 		return
 	}
 
-	if err := validation.CreateOrganization(req); err != nil {
+	if err := validation.CreateOrganization(ctx, req); err != nil {
 		c.JSON(http.StatusBadRequest, ParseError(err))
 		return
 	}
 
-	err := service.CreateOrganization(req)
+	resp, err := service.CreateOrganization(ctx, req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ParseError(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, dto.CommonResponse{Code: 0, Message: "Organization created successfully", Data: nil})
+	c.JSON(http.StatusOK, resp)
 }
 
 // UpdateOrganization handles updating an organization
 func UpdateOrganization(c *gin.Context) {
+	ctx, cancel := context.WithTimeout(c.Request.Context(), ApiContextTimeout)
+	defer cancel()
+
 	var req dto.UpdateOrganizationReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, ParseError(err))
 		return
 	}
 
-	var uri struct {
-		OrganizationId string `uri:"organizationId"`
-	}
-	if err := c.ShouldBindUri(&uri); err != nil {
+	if err := c.ShouldBindUri(&req); err != nil {
 		c.JSON(http.StatusBadRequest, ParseError(err))
 		return
 	}
 
-	if err := validation.UpdateOrganization(uri.OrganizationId, req); err != nil {
+	if err := validation.UpdateOrganization(ctx, req.OrganizationId); err != nil {
 		c.JSON(http.StatusBadRequest, ParseError(err))
 		return
 	}
 
-	err := service.UpdateOrganization(uri.OrganizationId, req)
+	resp, err := service.UpdateOrganization(ctx, req.OrganizationId, req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ParseError(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, dto.CommonResponse{Code: 0, Message: "Organization updated successfully", Data: nil})
+	c.JSON(http.StatusOK, resp)
 }
 
 // DeleteOrganization handles deleting an organization
 func DeleteOrganization(c *gin.Context) {
+	ctx, cancel := context.WithTimeout(c.Request.Context(), ApiContextTimeout)
+	defer cancel()
+
 	var uri struct {
 		OrganizationId string `uri:"organizationId"`
 	}
@@ -69,22 +78,25 @@ func DeleteOrganization(c *gin.Context) {
 		return
 	}
 
-	if err := validation.DeleteOrganization(uri.OrganizationId); err != nil {
+	if err := validation.DeleteOrganization(ctx, uri.OrganizationId); err != nil {
 		c.JSON(http.StatusBadRequest, ParseError(err))
 		return
 	}
 
-	err := service.DeleteOrganization(uri.OrganizationId)
+	resp, err := service.DeleteOrganization(ctx, uri.OrganizationId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ParseError(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, dto.CommonResponse{Code: 0, Message: "Organization deleted successfully", Data: nil})
+	c.JSON(http.StatusOK, resp)
 }
 
 // GetOrganization handles retrieving an organization
 func GetOrganization(c *gin.Context) {
+	ctx, cancel := context.WithTimeout(c.Request.Context(), ApiContextTimeout)
+	defer cancel()
+
 	var uri struct {
 		OrganizationId string `uri:"organizationId"`
 	}
@@ -93,38 +105,41 @@ func GetOrganization(c *gin.Context) {
 		return
 	}
 
-	if err := validation.GetOrganization(uri.OrganizationId); err != nil {
+	if err := validation.GetOrganization(ctx, uri.OrganizationId); err != nil {
 		c.JSON(http.StatusBadRequest, ParseError(err))
 		return
 	}
 
-	org, err := service.GetOrganization(uri.OrganizationId)
+	resp, err := service.GetOrganization(ctx, uri.OrganizationId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ParseError(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, dto.CommonResponse{Code: 0, Message: "Success", Data: org})
+	c.JSON(http.StatusOK, resp)
 }
 
 // QueryOrganizations handles querying multiple organizations
 func QueryOrganizations(c *gin.Context) {
+	ctx, cancel := context.WithTimeout(c.Request.Context(), ApiContextTimeout)
+	defer cancel()
+
 	var req dto.QueryOrganizationReq
 	if err := c.ShouldBindQuery(&req); err != nil {
 		c.JSON(http.StatusBadRequest, ParseError(err))
 		return
 	}
 
-	if err := validation.QueryOrganizations(req); err != nil {
+	if err := validation.QueryOrganizations(ctx, &req); err != nil {
 		c.JSON(http.StatusBadRequest, ParseError(err))
 		return
 	}
 
-	orgs, err := service.QueryOrganizations(req)
+	resp, err := service.QueryOrganizations(ctx, req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ParseError(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, dto.CommonResponse{Code: 0, Message: "Success", Data: orgs})
+	c.JSON(http.StatusOK, resp)
 }

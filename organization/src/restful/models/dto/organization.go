@@ -25,15 +25,16 @@ type GetOrganizationReq struct {
 
 // QueryOrganizationReq represents the request for querying multiple organizations with pagination and filters
 type QueryOrganizationReq struct {
-	Name      *string    `form:"name"`
-	CreatedAt *time.Time `form:"createdAt"`
-	Page      *int       `form:"page" binding:"omitempty,min=1"`
-	Limit     *int       `form:"limit" binding:"omitempty,min=1,max=100"`
-	Skip      *int       `form:"skip" binding:"omitempty,min=0"`
-	DateFrom  *time.Time `form:"dateFrom" time_format:"2006-01-02"`
-	DateTo    *time.Time `form:"dateTo" time_format:"2006-01-02"`
-	OrderBy   *string    `form:"orderBy"`
-	SortBy    *string    `form:"sortBy"`
+	OrganizationIds *[]string  `form:"organizationIds"`
+	Name            *string    `form:"name"`
+	CreatedAt       *time.Time `form:"createdAt"`
+	Page            *int       `form:"page" binding:"omitempty"`
+	Limit           *int       `form:"limit" binding:"omitempty,max=100"`
+	Skip            *int       `form:"skip" binding:"omitempty"`
+	DateFrom        *time.Time `form:"dateFrom" time_format:"2006-01-02"`
+	DateTo          *time.Time `form:"dateTo" time_format:"2006-01-02"`
+	OrderBy         *string    `form:"orderBy"`
+	SortBy          *string    `form:"sortBy"`
 }
 
 // GetOrganizationResp represents the complete response body of an organization

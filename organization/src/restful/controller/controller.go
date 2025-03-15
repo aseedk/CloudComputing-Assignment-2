@@ -4,7 +4,10 @@ import (
 	"cloud-computing/organization/organization/src/config"
 	"errors"
 	"net/http"
+	"time"
 )
+
+const ApiContextTimeout = 5 * time.Second
 
 // ErrorResponse represents a structured error response
 type ErrorResponse struct {

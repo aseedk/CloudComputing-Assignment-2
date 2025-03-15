@@ -11,12 +11,6 @@ var (
 	OrganizationCollection *mongo.Collection = nil
 )
 
-func init() {
-	if err := InitMongoDB(); err != nil {
-		panic(err)
-	}
-}
-
 func InitMongoDB() (err error) {
 	if OrganizationCollection = database.GetCollection("organizations", "organization"); OrganizationCollection == nil {
 		err = errors.New("OrganizationCollection not found")

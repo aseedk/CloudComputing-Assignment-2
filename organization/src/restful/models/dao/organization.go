@@ -79,9 +79,9 @@ func CountOrganizations(ctx context.Context, filter bson.M) (int, error) {
 }
 
 // QueryOrganizations retrieves multiple organizations with filtering and pagination
-func QueryOrganizations(ctx context.Context, organizationIds []string, name *string, dateFrom *time.Time, dateTo *time.Time, pageReq PageReq) ([]Organization, int, error) {
+func QueryOrganizations(ctx context.Context, organizationIds *[]string, name *string, dateFrom *time.Time, dateTo *time.Time, pageReq PageReq) ([]Organization, int, error) {
 	filter := bson.M{}
-	if len(organizationIds) > 0 {
+	if organizationIds != nil {
 		filter[FieldOrganizationId] = bson.M{"$in": organizationIds}
 	}
 	if name != nil {
