@@ -9,7 +9,7 @@ type CreateOrganizationReq struct {
 
 // UpdateOrganizationReq represents the request body for updating an organization
 type UpdateOrganizationReq struct {
-	OrganizationId string `uri:"organizationId" binding:"required"`
+	OrganizationId string `uri:"organizationId"`
 	Name           string `json:"name" binding:"required"`
 }
 

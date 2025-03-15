@@ -2,6 +2,7 @@ package dao
 
 import (
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -28,11 +29,27 @@ type Organization struct {
 	UpdatedAt      time.Time          `bson:"updatedAt"`
 }
 
-// PageReq represents pagination query parameters
-type PageReq struct {
-	Page  *int
-	Limit *int
-	Skip  *int
+// GenerateOrganizationId generates a unique organization ID using MongoDB's atomic update.
+func GenerateOrganizationId(ctx context.Context) (string, error) {
+	// Define filter and update
+	filter := bson.M{"_id": "organizationId"}
+	update := bson.M{"$inc": bson.M{"sequence_value": 1}}
+
+	// Define options to return the updated document
+	opts := options.FindOneAndUpdate().SetUpsert(true).SetReturnDocument(options.After)
+
+	// Execute findAndModify operation
+	var result struct {
+		SequenceValue int `bson:"sequence_value"`
+	}
+	err := IdGeneratorCollection.FindOneAndUpdate(ctx, filter, update, opts).Decode(&result)
+	if err != nil {
+		log.Println("Error generating organization ID:", err)
+		return "", err
+	}
+
+	// Return the unique ID as a formatted string
+	return fmt.Sprintf("ORG-%06d", result.SequenceValue), nil
 }
 
 // CreateOrganization inserts a new organization into the database
