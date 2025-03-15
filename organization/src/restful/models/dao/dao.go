@@ -1,7 +1,7 @@
 package dao
 
 import (
-	"cloud-computing/organization/organization/src/database"
+	"cloud-computing/organization/database"
 	"errors"
 	"go.mongodb.org/mongo-driver/mongo"
 	"log"

@@ -1,5 +1,5 @@
 package validation
 
-import "cloud-computing/organization/organization/src/xutil"
+import "cloud-computing/organization/xutil"
 
 var generateCustomError = xutil.GenerateCustomError

@@ -1,8 +1,8 @@
 package validation
 
 import (
-	"cloud-computing/organization/organization/src/restful/models/dao"
-	"cloud-computing/organization/organization/src/restful/models/dto"
+	"cloud-computing/organization/restful/models/dao"
+	"cloud-computing/organization/restful/models/dto"
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
 )

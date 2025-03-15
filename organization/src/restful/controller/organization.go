@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"cloud-computing/organization/organization/src/restful/models/dto"
-	"cloud-computing/organization/organization/src/restful/service"
-	"cloud-computing/organization/organization/src/restful/validation"
+	"cloud-computing/organization/restful/models/dto"
+	"cloud-computing/organization/restful/service"
+	"cloud-computing/organization/restful/validation"
 	"context"
 	"net/http"
 

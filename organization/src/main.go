@@ -1,10 +1,10 @@
 package main
 
 import (
-	"cloud-computing/organization/organization/src/config"
-	"cloud-computing/organization/organization/src/database"
-	"cloud-computing/organization/organization/src/restful/models/dao"
-	"cloud-computing/organization/organization/src/restful/route"
+	"cloud-computing/organization/config"
+	"cloud-computing/organization/database"
+	"cloud-computing/organization/restful/models/dao"
+	"cloud-computing/organization/restful/route"
 	"github.com/gin-gonic/gin"
 	"log"
 	"os"

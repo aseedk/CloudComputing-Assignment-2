@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"cloud-computing/organization/organization/src/config"
+	"cloud-computing/organization/config"
 	"errors"
 	"net/http"
 	"time"

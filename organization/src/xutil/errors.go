@@ -1,6 +1,6 @@
 package xutil
 
-import "cloud-computing/organization/organization/src/config"
+import "cloud-computing/organization/config"
 
 // GenerateCustomError creates a new custom error instance
 func GenerateCustomError(code int, message string, data interface{}) error {
