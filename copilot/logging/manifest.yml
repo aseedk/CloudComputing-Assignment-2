@@ -1,23 +1,23 @@
-# The manifest for the "organization" service.
+# The manifest for the "logging" service.
 # Read the full specification for the "Load Balanced Web Service" type at:
 #  https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/
 
 # Your service name will be used in naming your resources like log groups, ECS services, etc.
-name: organization
+name: logging
 type: Load Balanced Web Service
 
 # Distribute traffic to your service.
 http:
   # Requests to this path will be forwarded to your service.
   # To match all requests you can use the "/" path.
-  path: 'organization'
+  path: '/'
   # You can specify a custom health check path. The default is "/".
   # healthcheck: '/'
 
 # Configuration for your containers and service.
 image:
   # Docker build arguments. For additional overrides: https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#image-build
-  build: organization\Dockerfile
+  build: logging\Dockerfile
   # Port exposed through your container to route traffic to it.
   port: 8080
 
@@ -37,8 +37,6 @@ variables:                    # Pass environment variables as key value pairs.
   LOG_LEVEL: info
   MONGO_URI: mongodb+srv://test:test@cloudcomputing.boxjr.mongodb.net/?retryWrites=true&w=majority&appName=CloudComputing
   PORT: 8080
-  LOGGING_SERVICE_URL: http://api-ap-Publi-BFDxDeqMpPig-1100365814.us-east-1.elb.amazonaws.com/logging/
-
 #secrets:                      # Pass secrets from AWS Systems Manager (SSM) Parameter Store.
 #  GITHUB_TOKEN: GITHUB_TOKEN  # The key is the name of the environment variable, the value is the name of the SSM parameter.
 
