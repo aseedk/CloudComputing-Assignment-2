@@ -6,6 +6,7 @@ import (
 )
 
 var (
-	_        = godotenv.Load()
-	MongoURI = os.Getenv("MONGO_URI")
+	_          = godotenv.Load()
+	MongoURI   = os.Getenv("MONGO_URI")
+	LoggingURI = os.Getenv("LOGGING_SERVICE_URL")
 )
