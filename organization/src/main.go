@@ -34,6 +34,12 @@ func main() {
 	r.GET("/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{"status": "OK"})
 	})
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{"status": "OK"})
+	})
+	r.GET("/api/", func(c *gin.Context) {
+		c.JSON(200, gin.H{"status": "OK"})
+	})
 	route.SetupOrganizationRoute(r)
 
 	// Start server
