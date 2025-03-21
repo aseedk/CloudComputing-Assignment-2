@@ -110,6 +110,10 @@ func LoggingMiddleware() gin.HandlerFunc {
 
 		// Send log to logging service
 		go func() {
+
+			if logData["requestBody"] == "" || logData["responseBody"] == "" {
+				return
+			}
 			loggingServiceURL := config.LoggingURI // Update with actual URL
 
 			jsonData, err := json.Marshal(logData)

@@ -1,0 +1,24 @@
+docker_build=docker build -t organization-service -f organization/dockerfiles/Dockerfile .
+docker_run=docker run -p 8080:8080 -e PORT=8080 -e "MONGO_URI=mongodb+srv://test:test@cloudcomputing.boxjr.mongodb.net/?retryWrites=true&w=majority&appName=CloudComputing" --name organization-service organization-service
+docker_tag=docker tag organization-service:latest 588738600043.dkr.ecr.us-east-1.amazonaws.com/organization-service:latest
+aws_create_service= aws ecs create-service --cluster arn:aws:ecs:us-east-1:588738600043:cluster/Cloud_Computing --service-name organization-service --task-definition organization-task --desired-count 1 --launch-type FARGATE --network-configuration 'awsvpcConfiguration={subnets=[subnet-070b630e7fb4a8839,subnet-044062de1abea9e02],securityGroups=[sg-0bdf209baffa950d4],assignPublicIp="ENABLED"}' --deployment-configuration "minimumHealthyPercent=0,maximumPercent=100"
+
+
+copilot app init
+copilot env init
+copilot env deploy --name api
+
+copilot svc init --app api --dockerfile ./3-microservices/services/posts/Dockerfile --name posts --svc-type "Load Balanced Web Service"
+copilot svc init --app api --dockerfile ./3-microservices/services/threads/Dockerfile --name threads --svc-type "Load Balanced Web Service"
+copilot svc init --app api --dockerfile ./3-microservices/services/blogs/Dockerfile --name blogs --svc-type "Load Balanced Web Service"
+copilot svc init --app api --dockerfile ./organization/Dockerfile --name organization --svc-type "Load Balanced Web Service"
+copilot svc init --app api --dockerfile ./logging/Dockerfile --name logging --svc-type "Load Balanced Web Service"
+copilot svc init --app api --dockerfile ./user/Dockerfile --name users --svc-type "Load Balanced Web Service"
+
+
+copilot svc deploy --name posts
+copilot svc deploy --name threads
+copilot svc deploy --name blogs
+copilot svc deploy --name organization
+copilot svc deploy --name logging
+copilot svc deploy --name users

@@ -1,0 +1,29 @@
+{
+  "blogs": [
+    {
+      "id": 1,
+      "user": 3,
+      "blog": "Exploring the Enchanted Forest: A Journey Through the Unknown"
+    },
+    {
+      "id": 2,
+      "user": 1,
+      "blog": "The Art of Potion Brewing: Tips and Tricks for Beginners"
+    },
+    {
+      "id": 3,
+      "user": 4,
+      "blog": "The Rise and Fall of the Candy Kingdom: A Historical Perspective"
+    },
+    {
+      "id": 4,
+      "user": 2,
+      "blog": "Music and Magic: How Songs Shape the Land of Ooo"
+    },
+    {
+      "id": 5,
+      "user": 5,
+      "blog": "A Guide to Sword Fighting: Techniques for Defeating Evil"
+    }
+  ]
+}

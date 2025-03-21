@@ -7,7 +7,6 @@ import (
 	"cloud-computing/organization/restful/models/dao"
 	"cloud-computing/organization/restful/route"
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"io"
 	"log"
@@ -112,7 +111,9 @@ func LoggingMiddleware() gin.HandlerFunc {
 		// Send log to logging service
 		go func() {
 			loggingServiceURL := config.LoggingURI // Update with actual URL
-			fmt.Print("Logging to: ", loggingServiceURL)
+			if logData["requestBody"] == "" || logData["responseBody"] == "" {
+				return
+			}
 			jsonData, err := json.Marshal(logData)
 			if err != nil {
 				log.Println("Error marshalling log data:", err)

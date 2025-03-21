@@ -37,7 +37,7 @@ variables:                    # Pass environment variables as key value pairs.
   LOG_LEVEL: info
   MONGO_URI: mongodb+srv://test:test@cloudcomputing.boxjr.mongodb.net/?retryWrites=true&w=majority&appName=CloudComputing
   PORT: 8080
-  LOGGING_SERVICE_URL: http://api-ap-Publi-BFDxDeqMpPig-1100365814.us-east-1.elb.amazonaws.com/logging/
+  LOGGING_SERVICE_URL: http://api-ap-Publi-zWAnDtacYFLE-486599453.us-east-1.elb.amazonaws.com/logging/
 
 #secrets:                      # Pass secrets from AWS Systems Manager (SSM) Parameter Store.
 #  GITHUB_TOKEN: GITHUB_TOKEN  # The key is the name of the environment variable, the value is the name of the SSM parameter.
